@@ -10,4 +10,9 @@ class Post extends Model
     use SoftDeletes;
 
     protected $table = 'posts';
+
+    public function comment()
+    {
+        return $this->hasMany(Comment::class, 'post_id', 'id');
+    }
 }

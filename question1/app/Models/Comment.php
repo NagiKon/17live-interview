@@ -10,4 +10,9 @@ class Comment extends Model
     use SoftDeletes;
 
     protected $table = 'comments';
+
+    public function post()
+    {
+        return $this->belongsTo(Post::class, 'post_id', 'id');
+    }
 }
