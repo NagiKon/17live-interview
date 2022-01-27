@@ -29,4 +29,20 @@ class PostRepository
 
         return $post;
     }
+
+    public function updateTitle(Post $post, string $title): Post
+    {
+        $post->title = $title;
+        $post->save();
+
+        return $post;
+    }
+
+    public function updateContent(Post $post, string $content): Post
+    {
+        $post->content = $content;
+        $post->save();
+
+        return $post;
+    }
 }

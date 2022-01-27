@@ -50,6 +50,26 @@ class PostService
         ];
     }
 
+    public function updatePostById(int $postId, ?string $title, ?string $content): array
+    {
+        $post = $this->getPostModel($postId);
+        if (isset($title)) {
+            $post = $this->postRepository->updateTitle($post, $title);
+        }
+
+        if (isset($content)) {
+            $post = $this->postRepository->updateContent($post, $content);
+        }
+
+        return [
+            'id' => $post->id,
+            'title' => $post->title ?? '',
+            'content' => $post->content ?? '',
+            'createAt' => $post->created_at,
+            'updateAt' => $post->updated_at,
+        ];
+    }
+
     private function getPostModel(int $postId): Post
     {
         $post = $this->postRepository->getPostById($postId);

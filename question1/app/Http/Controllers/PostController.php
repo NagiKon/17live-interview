@@ -73,4 +73,26 @@ class PostController extends Controller
             throw $e;
         }
     }
+
+    public function updatePostById(Request $request, $postId)
+    {
+        $parameter = array_merge(['postId' => $postId], $request->all());
+        $validator = Validator::make($parameter, [
+            'postId' => 'integer|exists:App\Models\Post,id',
+            'title' => 'string|nullable',
+            'content' => 'string|nullable',
+        ]);
+        $this->handleDefaultValidatorException($validator);
+
+        DB::beginTransaction();
+        try {
+            $result = $this->postService->updatePostById($postId, $request->title, $request->content);
+            DB::commit();
+
+            return $this->successFormat($result);
+        } catch (Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+    }
 }

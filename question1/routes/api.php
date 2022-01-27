@@ -17,6 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['content-type.json'])->group(function () {
     Route::post('/posts', 'PostController@createPost');
     Route::put('/posts/{postId}', 'PostController@updateEntirePostById');
+    Route::patch('/posts/{postId}', 'PostController@updatePostById');
 
 });
 
