@@ -29,4 +29,9 @@ class PostService
             'updateAt' => $post->updated_at,
         ];
     }
+
+    public function createPost(string $title, string $content): void
+    {
+        $this->postRepository->createPost($title, $content);
+    }
 }

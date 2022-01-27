@@ -10,4 +10,14 @@ class PostRepository
     {
         return Post::find($postId);
     }
+
+    public function createPost(string $title, string $content): void
+    {
+        $post = new Post();
+
+        $post->title = $title;
+        $post->content = $content;
+
+        $post->save();
+    }
 }
