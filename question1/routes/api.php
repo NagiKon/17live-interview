@@ -27,3 +27,4 @@ Route::get('/posts/{postId}', 'PostController@getPostById');
 Route::delete('/posts/{postId}', 'PostController@deletePostById');
 
 Route::get('/posts/{postId}/comments/{commentId}', 'CommentController@getCommentById');
+Route::delete('/posts/{postId}/comments/{commentId}', 'CommentController@deleteCommentById');

@@ -85,4 +85,27 @@ class CommentController extends Controller
             throw $e;
         }
     }
+
+    public function deleteCommentById($postId, $commentId)
+    {
+        $validator = Validator::make([
+            'postId'    => $postId,
+            'commentId' => $commentId
+        ], [
+            'postId'    => 'integer|exists:App\Models\Post,id',
+            'commentId' => 'integer|exists:App\Models\Comment,id',
+        ]);
+        $this->handleDefaultValidatorException($validator);
+
+        DB::beginTransaction();
+        try {
+            $this->commentService->deleteCommentById($postId, $commentId);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        return $this->successFormat();
+    }
 }

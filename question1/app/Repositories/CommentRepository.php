@@ -29,4 +29,9 @@ class CommentRepository
 
         return $comment;
     }
+
+    public function deleteComment(Comment $comment): void
+    {
+        $comment->delete();
+    }
 }

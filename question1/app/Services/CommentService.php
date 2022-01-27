@@ -61,6 +61,14 @@ class CommentService
         }
     }
 
+    public function deleteCommentById(int $postId, int $commentId): void
+    {
+        $this->checkPostExistence($postId);
+
+        $comment = $this->getCommentModel($postId, $commentId);
+        $this->commentRepository->deleteComment($comment);
+    }
+
     private function getCommentModel(int $postId, int $commentId): Comment
     {
         $comment = $this->commentRepository->getCommentById($postId, $commentId);
