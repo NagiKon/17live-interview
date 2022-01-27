@@ -1,6 +1,5 @@
 <?php
 
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -24,6 +23,7 @@ Route::middleware(['content-type.json'])->group(function () {
 });
 
 Route::get('/posts/{postId}', 'PostController@getPostById');
+Route::get('/posts/{postId}/comments', 'PostController@getCommentListByPostId');
 Route::delete('/posts/{postId}', 'PostController@deletePostById');
 
 Route::get('/posts/{postId}/comments/{commentId}', 'CommentController@getCommentById');

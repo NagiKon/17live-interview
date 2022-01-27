@@ -62,6 +62,34 @@ class CommentService
         $this->commentRepository->deleteComment($comment);
     }
 
+    public function getCommentListByPostId(int $postId, int $page, int $perPage): array
+    {
+        $this->checkPostExistence($postId);
+
+        $comments = $this->commentRepository->getCommentListByPostId($postId, $page, $perPage);
+        $paginationInfo = [
+            'totalPage'    => $comments->lastPage(),
+            'currentPage'  => $comments->currentPage(),
+            'totalAmount'  => $comments->total(),
+            'nextPage'     => $comments->nextPageUrl() ? true : false,
+            'previousPage' => $comments->previousPageUrl() ? true : false,
+        ];
+
+        $commentList = $comments->map(function ($comment) {
+            return [
+                'id'       => $comment->id,
+                'message'  => $comment->message ?? '',
+                'createAt' => $comment->created_at,
+                'updateAt' => $comment->updated_at,
+            ];
+        });
+
+        return [
+            'paginationInfo' => $paginationInfo,
+            'commentList' => $commentList,
+        ];
+    }
+
     private function checkPostExistence(int $postId): void
     {
         if (!$this->postService->isExistedPost($postId)) {

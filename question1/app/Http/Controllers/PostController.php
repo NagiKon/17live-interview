@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Services\CommentService;
 use App\Services\PostService;
 use App\Http\Controllers\Controller;
 
@@ -13,10 +14,12 @@ use Exception;
 
 class PostController extends Controller
 {
+    private $commentService;
     private $postService;
 
-    public function __construct(PostService $postService)
+    public function __construct(CommentService $commentService, PostService $postService)
     {
+        $this->commentService = $commentService;
         $this->postService = $postService;
     }
 
@@ -113,5 +116,22 @@ class PostController extends Controller
         }
 
         return $this->successFormat();
+    }
+
+    public function getCommentListByPostId(Request $request, $postId)
+    {
+        $parameter = array_merge(['postId' => $postId], $request->all());
+        $validator = Validator::make($parameter, [
+            'postId'  => 'integer|exists:App\Models\Post,id',
+            'page'    => 'integer|nullable|min:1',
+            'perPage' => 'integer|nullable|min:1',
+        ]);
+        $this->handleDefaultValidatorException($validator);
+
+        $page        = intval($request->input('page', 1));
+        $perPage     = intval($request->input('perPage', 6));
+        $commentList = $this->commentService->getCommentListByPostId($postId, $page, $perPage);
+
+        return $this->successFormat($commentList);
     }
 }

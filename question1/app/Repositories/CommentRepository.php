@@ -3,7 +3,8 @@
 namespace App\Repositories;
 
 use App\Models\Comment;
-use App\Models\Post;
+
+use Illuminate\Contracts\Pagination\LengthAwarePaginator;
 
 class CommentRepository
 {
@@ -33,5 +34,10 @@ class CommentRepository
     public function deleteComment(Comment $comment): void
     {
         $comment->delete();
+    }
+
+    public function getCommentListByPostId(int $postId, int $page, int $perPage): LengthAwarePaginator
+    {
+        return Comment::where('post_id', $postId)->paginate($perPage, '*', '', $page);
     }
 }
