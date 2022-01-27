@@ -328,6 +328,105 @@ DELETE /api/posts/{postId}
 
 ## Comment 相關 API
 
+### 取得某文章的所有留言
+
+```text
+GET /posts/{postId}/comments
+```
+
+**Request**
+
+| 欄位    | 欄位說明                  | 型別  | 預設值 | 必填 | 參數位置 | 備註 |
+| ------- | ------------------------- | ----- | ------ | ---- | -------- | ---- |
+| postId  | Unique identifier of post | `int` | 無     | 是   | `path`   | 無   |
+| page    | 指定頁數                  | `int` | 1      | 否   | `query`  | 無   |
+| perPage | 每頁要呈現的留言數量      | `int` | 6      | 否   | `query`  | 無   |
+
+參數範例
+
+取得文章 ID 為 1 的所有留言，從第 1 頁開始顯示，每次只顯示 3 筆。
+
+```text
+/api/posts/1/comments?page=1&perPage=3
+```
+
+**Response**
+
+回傳欄位說明
+
+**paginationInfo**
+
+| 欄位         | 名稱                       | 型別      |
+| ------------ | -------------------------- | --------- |
+| totalPage    | 總頁數                     | `int`     |
+| currentPage  | 當前所瀏覽的頁面位於第幾頁 | `int`     |
+| totalAmount  | 留言的總數量               | `int`     |
+| nextPage     | 是否有下一頁               | `boolean` |
+| previousPage | 是否有上一頁               | `boolean` |
+
+**commentList**
+
+| 欄位     | 名稱                         | 型別        | 備註 |
+| -------- | ---------------------------- | ----------- | ---- |
+| id       | Unique identifier of comment | `int`       | 無   |
+| message  | 留言訊息                     | `string`    | 無   |
+| createAt | 建立時間                     | `timestamp` | 無   |
+| updateAt | 更新時間                     | `timestamp` | 無   |
+
+成功
+
+```json
+{
+    "status": "success",
+    "data": {
+        "paginationInfo": {
+            "totalPage": 2,
+            "currentPage": 1,
+            "totalAmount": 6,
+            "nextPage": true,
+            "previousPage": false
+        },
+        "commentList": [
+            {
+                "id": 1,
+                "message": "Lizard, who seemed too much overcome to do anything but sit with its mouth open, gazing up into the roof of the court.",
+                "createAt": "2022-01-26T10:17:51.000000Z",
+                "updateAt": "2022-01-26T10:17:51.000000Z"
+            },
+            {
+                "id": 2,
+                "message": "I think I could, if I only knew how to begin.' For, you see, so many out-of-the-way things had happened lately.",
+                "createAt": "2022-01-26T10:17:51.000000Z",
+                "updateAt": "2022-01-26T10:17:51.000000Z"
+            },
+            {
+                "id": 3,
+                "message": "ME' beautifully printed on it in large letters. It was all very well to say 'Drink me.",
+                "createAt": "2022-01-26T10:17:51.000000Z",
+                "updateAt": "2022-01-26T10:17:51.000000Z"
+            }
+        ]
+    }
+}
+```
+
+失敗
+
+```json
+{
+    "status": "error",
+    "error": {
+        "type": "VALIDATION_ERROR",
+        "message": "Field Error",
+        "code": "B00001",
+        "field": "postId",
+        "reason": "The selected post id is invalid."
+    }
+}
+```
+
+---
+
 ### 取得某文章的一筆留言
 
 ```text
