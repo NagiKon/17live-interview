@@ -280,4 +280,50 @@ PATCH /api/posts/{postId}
 
 ---
 
+### 刪除一筆文章
+
+```text
+DELETE /api/posts/{postId}
+```
+
+**Request**
+
+| 欄位   | 欄位說明                  | 型別  | 預設值 | 必填 | 參數位置 | 備註 |
+| ------ | ------------------------- | ----- | ------ | ---- | -------- | ---- |
+| postId | Unique identifier of post | `int` | 無     | 是   | `path`   | 無   |
+
+參數範例
+
+```text
+/api/posts/1
+```
+
+**Response**
+
+成功
+
+```json
+{
+    "status": "success",
+    "data": []
+}
+```
+
+失敗
+
+```json
+{
+    "status": "error",
+    "error": {
+        "type": "VALIDATION_ERROR",
+        "message": "Field Error",
+        "code": "B00001",
+        "field": "postId",
+        "reason": "The selected post id is invalid."
+    }
+}
+```
+
+---
+
 ## Comment 相關 API
