@@ -87,4 +87,10 @@ class PostService
             $this->postRepository->deletePost($post);
         }
     }
+
+    public function isExistedPost(int $postId): bool
+    {
+        $post = $this->postRepository->getPostById($postId);
+        return $post !== null ? true : false;
+    }
 }
