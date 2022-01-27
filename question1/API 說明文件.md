@@ -9,6 +9,7 @@
 | C00001 | Content Type of header is not JSON | 400              |      |
 | C00002 | Content Type of body is not JSON   | 400              |      |
 | C01001 | This Post is not found.            | 404              |      |
+| C01002 | This Comment is not found.         | 404              |      |
 
 ### 資料驗證問題
 
@@ -379,9 +380,10 @@ GET /api/posts/{postId}/comments/{commentId}
 {
     "status": "error",
     "error": {
-        "type": "UNDEFINED_ERROR",
-        "message": "This Comment is not exist. ID: 5",
-        "code": "U00001"
+        "type": "ERROR_ACTION",
+        "message": "This comment is not exist.",
+        "code": "C01002",
+        "detail": "Comment's ID: 50"
     }
 }
 ```
