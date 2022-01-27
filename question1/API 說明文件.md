@@ -208,4 +208,76 @@ PUT /api/posts/{postId}
 
 ---
 
+### 部分更新一筆文章
+
+```text
+PATCH /api/posts/{postId}
+```
+
+**Request**
+
+| 欄位    | 說明                      | 型別     | 參數位置 | 必填 | 備註              |
+| ------- | ------------------------- | -------- | -------- | ---- | ----------------- |
+| postId  | Unique identifier of post | `int`    | `path`   | 是   | 無                |
+| title   | 文章標題                  | `string` | `body`   | 否   | 有給 Key 才會更新 |
+| content | 文章內容                  | `string` | `body`   | 否   | 有給 Key 才會更新 |
+
+參數範例
+
+只更新 `title`，不更新 `content`。
+
+```text
+/api/posts/11
+```
+
+```json
+{
+    "title": "Her hair was windswept as she rode in the black convertible.",
+}
+```
+
+**Response**
+
+回傳欄位說明
+
+| 欄位     | 欄位說明                  | 型別        | 預設值 | 備註 |
+| -------- | ------------------------- | ----------- | ------ | ---- |
+| id       | Unique identifier of post | `int`       | 無     | 無   |
+| title    | 更新過後的文章標題        | `string`    | 無     | 無   |
+| content  | 更新過後的文章內容        | `string`    | 無     | 無   |
+| createAt | 建立時間                  | `timestamp` | 無     | 無   |
+| updateAt | 更新時間                  | `timestamp` | 無     | 無   |
+
+成功
+
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 11,
+        "title": "Her hair was windswept as she rode in the black convertible.",
+        "content": "He learned the hardest lesson of his life and had the scars, both physical and mental, to prove it...",
+        "createAt": "2022-01-27T10:19:27.000000Z",
+        "updateAt": "2022-01-27T12:06:28.000000Z"
+    }
+}
+```
+
+失敗
+
+```json
+{
+    "status": "error",
+    "error": {
+        "type": "VALIDATION_ERROR",
+        "message": "Field Error",
+        "code": "B00001",
+        "field": "title",
+        "reason": "The title field is required."
+    }
+}
+```
+
+---
+
 ## Comment 相關 API
