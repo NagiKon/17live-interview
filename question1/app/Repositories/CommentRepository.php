@@ -21,4 +21,12 @@ class CommentRepository
 
         $comment->save();
     }
+
+    public function updateComment(Comment $comment, $message): Comment
+    {
+        $comment->message = $message;
+        $comment->save();
+
+        return $comment;
+    }
 }

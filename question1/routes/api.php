@@ -20,6 +20,7 @@ Route::middleware(['content-type.json'])->group(function () {
     Route::patch('/posts/{postId}', 'PostController@updatePostById');
 
     Route::post('/posts/{postId}/comments', 'CommentController@createComment');
+    Route::put('/posts/{postId}/comments/{commentId}', 'CommentController@updateComment');
 });
 
 Route::get('/posts/{postId}', 'PostController@getPostById');

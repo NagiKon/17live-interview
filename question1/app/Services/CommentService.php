@@ -21,11 +21,7 @@ class CommentService
     public function getCommentById(int $postId, int $commentId): array
     {
         $this->checkPostExistence($postId);
-
-        $comment = $this->commentRepository->getCommentById($postId, $commentId);
-        if (is_null($comment)) {
-            throw new UndefinedException("This Comment is not exist. Comment's ID: $commentId");
-        }
+        $comment = $this->getCommentModel($postId, $commentId);
 
         return [
             'id' => $commentId,
@@ -41,10 +37,37 @@ class CommentService
         $this->commentRepository->createComment($postId, $message);
     }
 
+    public function updateComment(int $postId, int $commentId, string $message): array
+    {
+        $this->checkPostExistence($postId);
+
+        $comment = $this->commentRepository->updateComment(
+            $this->getCommentModel($postId, $commentId),
+            $message
+        );
+
+        return [
+            'id' => $commentId,
+            'message' => $comment->message ?? '',
+            'createAt' => $comment->created_at,
+            'updateAt' => $comment->updated_at,
+        ];
+    }
+
     private function checkPostExistence(int $postId): void
     {
         if (!$this->postService->isExistedPost($postId)) {
             throw new UndefinedException("This Post that this comment belongs is not exist. Post's ID: $postId");
+        }
+    }
+
+    private function getCommentModel(int $postId, int $commentId): Comment
+    {
+        $comment = $this->commentRepository->getCommentById($postId, $commentId);
+        if (is_null($comment)) {
+            throw new UndefinedException("This Comment is not exist. Comment's ID: $commentId");
+        } else {
+            return $comment;
         }
     }
 }
