@@ -17,3 +17,5 @@ use Illuminate\Support\Facades\Route;
 Route::middleware(['content-type.json'])->group(function () {
 
 });
+
+Route::get('/posts/{postId}', 'PostController@getPostById');
