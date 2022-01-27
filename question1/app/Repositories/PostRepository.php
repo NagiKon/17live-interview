@@ -20,4 +20,13 @@ class PostRepository
 
         $post->save();
     }
+
+    public function updateEntirePost(Post $post, string $title, string $content): Post
+    {
+        $post->title = $title;
+        $post->content = $content;
+        $post->save();
+
+        return $post;
+    }
 }
