@@ -25,4 +25,64 @@
 
 ## Post 相關 API
 
+### 取得一筆文章
+
+```text
+GET /api/posts/{postId}
+```
+
+**Request**
+
+| 欄位   | 欄位說明                  | 型別  | 預設值 | 必填 | 參數位置 | 備註 |
+| ------ | ------------------------- | ----- | ------ | ---- | -------- | ---- |
+| postId | Unique identifier of post | `int` | 無     | 是   | `path`   | 無   |
+
+參數範例
+
+```text
+/api/posts/1
+```
+
+**Response**
+
+回傳欄位說明
+
+| 欄位     | 欄位說明                  | 型別        | 預設值 | 備註 |
+| -------- | ------------------------- | ----------- | ------ | ---- |
+| id       | Unique identifier of post | `int`       | 無     | 無   |
+| title    | 文章標題                  | `string`    | 無     | 無   |
+| content  | 文章內容                  | `string`    | 無     | 無   |
+| createAt | 建立時間                  | `timestamp` | 無     | 無   |
+| updateAt | 更新時間                  | `timestamp` | 無     | 無   |
+
+成功
+
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 1,
+        "title": "Ut ut corporis quaerat saepe.",
+        "content": "Alice. 'Nothing,' said Alice. Nothing WHATEVER?...",
+        "createAt": "2022-01-26T10:17:51.000000Z",
+        "updateAt": "2022-01-26T10:17:51.000000Z"
+    }
+}
+```
+
+失敗
+
+```json
+{
+    "status": "error",
+    "error": {
+        "type": "VALIDATION_ERROR",
+        "message": "Field Error",
+        "code": "B00001",
+        "field": "postId",
+        "reason": "The selected post id is invalid."
+    }
+}
+```
+
 ## Comment 相關 API
