@@ -8,6 +8,7 @@
 | ------ | ---------------------------------- | ---------------- | ---- |
 | C00001 | Content Type of header is not JSON | 400              |      |
 | C00002 | Content Type of body is not JSON   | 400              |      |
+| C01001 | This Post is not found.            | 404              |      |
 
 ### 資料驗證問題
 
@@ -520,10 +521,10 @@ DELETE /posts/{postId}/comments/{commentId}
 
 **Request**
 
-| 欄位      | 欄位說明                     | 型別     | 預設值 | 必填 | 參數位置 | 備註 |
-| --------- | ---------------------------- | -------- | ------ | ---- | -------- | ---- |
-| postId    | Unique identifier of post    | `int`    | 無     | 是   | `path`   | 無   |
-| commentId | Unique identifier of comment | `int`    | 無     | 是   | `path`   | 無   |
+| 欄位      | 欄位說明                     | 型別  | 預設值 | 必填 | 參數位置 | 備註 |
+| --------- | ---------------------------- | ----- | ------ | ---- | -------- | ---- |
+| postId    | Unique identifier of post    | `int` | 無     | 是   | `path`   | 無   |
+| commentId | Unique identifier of comment | `int` | 無     | 是   | `path`   | 無   |
 
 參數範例
 
