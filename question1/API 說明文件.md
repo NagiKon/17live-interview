@@ -324,6 +324,65 @@ DELETE /api/posts/{postId}
 }
 ```
 
----
-
 ## Comment 相關 API
+
+### 取得某文章的一筆留言
+
+```text
+GET /api/posts/{postId}/comments/{commentId}
+```
+
+**Request**
+
+| 欄位      | 欄位說明                     | 型別  | 預設值 | 必填 | 參數位置 | 備註 |
+| --------- | ---------------------------- | ----- | ------ | ---- | -------- | ---- |
+| postId    | Unique identifier of post    | `int` | 無     | 是   | `path`   | 無   |
+| commentId | Unique identifier of comment | `int` | 無     | 是   | `path`   | 無   |
+
+參數範例
+
+取得文章 ID 為 1，留言 ID 為 5 的留言。
+
+```text
+/api/posts/1/comments/5
+```
+
+**Response**
+
+回傳欄位說明
+
+| 欄位     | 欄位說明                     | 型別        | 預設值 | 備註 |
+| -------- | ---------------------------- | ----------- | ------ | ---- |
+| id       | Unique identifier of comment | `int`       | 無     | 無   |
+| message  | 留言訊息                     | `string`    | 無     | 無   |
+| createAt | 建立時間                     | `timestamp` | 無     | 無   |
+| updateAt | 更新時間                     | `timestamp` | 無     | 無   |
+
+成功
+
+```json
+{
+    "status": "success",
+    "data": {
+        "id": 5,
+        "message": "What IS the use of a book, thought Alice without pictures or conversations?",
+        "createAt": "2022-01-26T10:17:51.000000Z",
+        "updateAt": "2022-01-26T10:17:51.000000Z"
+    }
+}
+```
+
+失敗
+
+```json
+{
+    "status": "error",
+    "error": {
+        "type": "UNDEFINED_ERROR",
+        "message": "This Comment is not exist. ID: 5",
+        "code": "U00001"
+    }
+}
+```
+
+---
