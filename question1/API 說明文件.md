@@ -511,3 +511,50 @@ PUT /posts/{postId}/comments/{commentId}
 ```
 
 ---
+
+### 刪除某文章的一筆留言
+
+```text
+DELETE /posts/{postId}/comments/{commentId}
+```
+
+**Request**
+
+| 欄位      | 欄位說明                     | 型別     | 預設值 | 必填 | 參數位置 | 備註 |
+| --------- | ---------------------------- | -------- | ------ | ---- | -------- | ---- |
+| postId    | Unique identifier of post    | `int`    | 無     | 是   | `path`   | 無   |
+| commentId | Unique identifier of comment | `int`    | 無     | 是   | `path`   | 無   |
+
+參數範例
+
+刪除留言的 ID 為 5，所屬文章的 ID 為 1 的一筆留言。
+
+```text
+/posts/1/comments/5
+```
+
+**Response**
+
+成功
+
+```json
+{
+    "status": "success",
+    "data": []
+}
+```
+
+失敗
+
+```json
+{
+    "status": "error",
+    "error": {
+        "type": "VALIDATION_ERROR",
+        "message": "Field Error",
+        "code": "B00001",
+        "field": "commentId",
+        "reason": "The selected comment id is invalid."
+    }
+}
+```
