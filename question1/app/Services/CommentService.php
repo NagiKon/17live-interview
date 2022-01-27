@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Exceptions\UndefinedException;
 use App\Exceptions\ActionException;
 use App\Models\Comment;
 use App\Repositories\CommentRepository;
@@ -74,7 +73,7 @@ class CommentService
     {
         $comment = $this->commentRepository->getCommentById($postId, $commentId);
         if (is_null($comment)) {
-            throw new UndefinedException("This Comment is not exist. Comment's ID: $commentId");
+            throw new ActionException(ActionException::ERROR_COMMENT_NOT_EXISTS, "Comment's ID: $commentId");
         } else {
             return $comment;
         }
