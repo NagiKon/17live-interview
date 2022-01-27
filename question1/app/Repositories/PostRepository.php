@@ -45,4 +45,9 @@ class PostRepository
 
         return $post;
     }
+
+    public function deletePost(Post $post): void
+    {
+        $post->delete();
+    }
 }

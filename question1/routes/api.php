@@ -22,3 +22,4 @@ Route::middleware(['content-type.json'])->group(function () {
 });
 
 Route::get('/posts/{postId}', 'PostController@getPostById');
+Route::delete('/posts/{postId}', 'PostController@deletePostById');

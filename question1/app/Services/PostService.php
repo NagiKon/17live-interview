@@ -79,4 +79,12 @@ class PostService
             return $post;
         }
     }
+
+    public function deletePostById(int $postId): void
+    {
+        $post = $this->postRepository->getPostById($postId);
+        if (isset($post)) {
+            $this->postRepository->deletePost($post);
+        }
+    }
 }

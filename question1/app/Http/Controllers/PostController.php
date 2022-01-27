@@ -95,4 +95,23 @@ class PostController extends Controller
             throw $e;
         }
     }
+
+    public function deletePostById($postId)
+    {
+        $validator = Validator::make(['postId' => $postId], [
+            'postId' => 'integer|exists:App\Models\Post,id',
+        ]);
+        $this->handleDefaultValidatorException($validator);
+
+        DB::beginTransaction();
+        try {
+            $this->postService->deletePostById($postId);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        return $this->successFormat();
+    }
 }
