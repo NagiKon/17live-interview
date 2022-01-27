@@ -85,4 +85,56 @@ GET /api/posts/{postId}
 }
 ```
 
+---
+
+### 新增一筆文章
+
+```text
+POST /api/posts
+```
+
+**Request**
+
+| 欄位    | 說明     | 型別     | 參數位置 | 必填 | 備註 |
+| ------- | -------- | -------- | -------- | ---- | ---- |
+| title   | 文章標題 | `string` | `body`   | 是   | 無   |
+| content | 文章內容 | `string` | `body`   | 是   | 無   |
+
+參數範例
+
+```json
+{
+    "title": "Most shark attacks occur about 10 feet from the beach since that's where the people are.",
+    "content": "I'd rather be a bird than a fish. The gloves protect my feet from excess work."
+}
+```
+
+**Response**
+
+成功
+
+```json
+{
+    "status": "success",
+    "data": []
+}
+```
+
+失敗
+
+```json
+{
+    "status": "error",
+    "error": {
+        "type": "VALIDATION_ERROR",
+        "message": "Field Error",
+        "code": "B00001",
+        "field": "title",
+        "reason": "The title field is required."
+    }
+}
+```
+
+---
+
 ## Comment 相關 API
