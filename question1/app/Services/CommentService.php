@@ -3,6 +3,7 @@
 namespace App\Services;
 
 use App\Exceptions\UndefinedException;
+use App\Exceptions\ActionException;
 use App\Models\Comment;
 use App\Repositories\CommentRepository;
 use App\Services\PostService;
@@ -57,7 +58,7 @@ class CommentService
     private function checkPostExistence(int $postId): void
     {
         if (!$this->postService->isExistedPost($postId)) {
-            throw new UndefinedException("This Post that this comment belongs is not exist. Post's ID: $postId");
+            throw new ActionException(ActionException::ERROR_POST_NOT_EXISTS, "Post's ID: $postId");
         }
     }
 

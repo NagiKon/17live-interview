@@ -2,7 +2,7 @@
 
 namespace App\Services;
 
-use App\Exceptions\UndefinedException;
+use App\Exceptions\ActionException;
 use App\Models\Post;
 use App\Repositories\PostRepository;
 
@@ -22,7 +22,7 @@ class PostService
         return [
             'id' => $post->id,
             'title' => $post->title ?? '',
-            'content' => $post-> content ?? '',
+            'content' => $post->content ?? '',
             'createAt' => $post->created_at,
             'updateAt' => $post->updated_at,
         ];
@@ -74,7 +74,7 @@ class PostService
     {
         $post = $this->postRepository->getPostById($postId);
         if (is_null($post)) {
-            throw new UndefinedException("This Post is not exist. ID: $postId");
+            throw new ActionException(ActionException::ERROR_POST_NOT_EXISTS, "Post's ID: $postId");
         } else {
             return $post;
         }
@@ -82,15 +82,17 @@ class PostService
 
     public function deletePostById(int $postId): void
     {
-        $post = $this->postRepository->getPostById($postId);
-        if (isset($post)) {
-            $this->postRepository->deletePost($post);
-        }
+        $post = $this->getPostModel($postId);
+        $this->postRepository->deletePost($post);
     }
 
     public function isExistedPost(int $postId): bool
     {
-        $post = $this->postRepository->getPostById($postId);
-        return $post !== null ? true : false;
+        try {
+            $this->getPostModel($postId);
+            return true;
+        } catch (ActionException $e) {
+            return false;
+        }
     }
 }
