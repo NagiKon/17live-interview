@@ -386,3 +386,58 @@ GET /api/posts/{postId}/comments/{commentId}
 ```
 
 ---
+
+### 新增某文章的一筆留言
+
+```text
+POST /posts/{postId}/comments
+```
+
+**Request**
+
+| 欄位    | 說明                      | 型別     | 參數位置 | 必填 | 備註 |
+| ------- | ------------------------- | -------- | -------- | ---- | ---- |
+| postId  | Unique identifier of post | `int`    | `path`   | 是   | 無   |
+| message | 留言訊息                  | `string` | `body`   | 是   | 無   |
+
+參數範例
+
+新增一筆留言，該留言所屬的文章 ID 為 1。
+
+```text
+/posts/1/comments
+```
+
+```json
+{
+    "message": "The door slammed on the watermelon."
+}
+```
+
+**Response**
+
+成功
+
+```json
+{
+    "status": "success",
+    "data": []
+}
+```
+
+失敗
+
+```json
+{
+    "status": "error",
+    "error": {
+        "type": "VALIDATION_ERROR",
+        "message": "Field Error",
+        "code": "B00001",
+        "field": "message",
+        "reason": "The message field is required."
+    }
+}
+```
+
+---
