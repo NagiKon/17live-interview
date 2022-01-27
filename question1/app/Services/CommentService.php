@@ -54,19 +54,19 @@ class CommentService
         ];
     }
 
-    private function checkPostExistence(int $postId): void
-    {
-        if (!$this->postService->isExistedPost($postId)) {
-            throw new ActionException(ActionException::ERROR_POST_NOT_EXISTS, "Post's ID: $postId");
-        }
-    }
-
     public function deleteCommentById(int $postId, int $commentId): void
     {
         $this->checkPostExistence($postId);
 
         $comment = $this->getCommentModel($postId, $commentId);
         $this->commentRepository->deleteComment($comment);
+    }
+
+    private function checkPostExistence(int $postId): void
+    {
+        if (!$this->postService->isExistedPost($postId)) {
+            throw new ActionException(ActionException::ERROR_POST_NOT_EXISTS, "Post's ID: $postId");
+        }
     }
 
     private function getCommentModel(int $postId, int $commentId): Comment
