@@ -35,4 +35,28 @@ class CommentController extends Controller
 
         return $this->successFormat($post);
     }
+
+    public function createComment(Request $request, $postId)
+    {
+        $message = $request->message;
+        $validator = Validator::make([
+            'postId'  => $postId,
+            'message' => $message
+        ], [
+            'postId'  => 'integer|exists:App\Models\Post,id',
+            'message' => 'required|string',
+        ]);
+        $this->handleDefaultValidatorException($validator);
+
+        DB::beginTransaction();
+        try {
+            $this->commentService->createComment($postId, $message);
+            DB::commit();
+        } catch (Exception $e) {
+            DB::rollback();
+            throw $e;
+        }
+
+        return $this->successFormat();
+    }
 }

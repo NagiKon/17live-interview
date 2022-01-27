@@ -20,9 +20,7 @@ class CommentService
 
     public function getCommentById(int $postId, int $commentId): array
     {
-        if (!$this->postService->isExistedPost($postId)) {
-            throw new UndefinedException("This Post that this comment belongs is not exist. ID: $postId");
-        }
+        $this->checkPostExistence($postId);
 
         $comment = $this->commentRepository->getCommentById($postId, $commentId);
         if (is_null($comment)) {
@@ -35,5 +33,18 @@ class CommentService
             'createAt' => $comment->created_at,
             'updateAt' => $comment->updated_at,
         ];
+    }
+
+    public function createComment(int $postId, string $message): void
+    {
+        $this->checkPostExistence($postId);
+        $this->commentRepository->createComment($postId, $message);
+    }
+
+    private function checkPostExistence(int $postId): void
+    {
+        if (!$this->postService->isExistedPost($postId)) {
+            throw new UndefinedException("This Post that this comment belongs is not exist. Post's ID: $postId");
+        }
     }
 }
