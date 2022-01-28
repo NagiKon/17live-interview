@@ -32,11 +32,11 @@ interface Auth
 
 interface Logging
 {
-    public function LogRequest();
-    public function LogResponse();
+    public function logRequest();
+    public function logResponse();
 }
 
-interface validation
+interface Validation
 {
     public function validate();
 }
@@ -49,7 +49,7 @@ interface validation
 ```php
 <?php
 
-class jwtAuthMiddleware extends Middleware implements Auth
+class JwtAuthMiddleware extends Middleware implements Auth
 {
     public function handleRequest($request)
     {
@@ -70,12 +70,12 @@ class jwtAuthMiddleware extends Middleware implements Auth
 }
 ```
 
-而如果你今天想改回傳統的 session_id 也可以在另外建立一個新的 middleware，並將原來的 jwtAuthMiddleware 移除。
+而如果你今天想改回傳統的 session_id 驗證的話，也可以在另外建立一個新的 middleware，並將原來的 JwtAuthMiddleware 移除。
 
 ```php
 <?php
 
-class sessionAuthMiddleware extends Middleware implements Auth
+class SessionAuthMiddleware extends Middleware implements Auth
 {
     public function handleRequest($request)
     {
