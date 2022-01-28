@@ -15,6 +15,16 @@ class PostService
         $this->postRepository = $postRepository;
     }
 
+    private function getPostModel(int $postId): Post
+    {
+        $post = $this->postRepository->getPostById($postId);
+        if (is_null($post)) {
+            throw new ActionException(ActionException::ERROR_POST_NOT_EXISTS, "Post's ID: $postId");
+        } else {
+            return $post;
+        }
+    }
+
     public function getPostById(int $postId): array
     {
         $post = $this->getPostModel($postId);
@@ -68,16 +78,6 @@ class PostService
             'createAt' => $post->created_at,
             'updateAt' => $post->updated_at,
         ];
-    }
-
-    private function getPostModel(int $postId): Post
-    {
-        $post = $this->postRepository->getPostById($postId);
-        if (is_null($post)) {
-            throw new ActionException(ActionException::ERROR_POST_NOT_EXISTS, "Post's ID: $postId");
-        } else {
-            return $post;
-        }
     }
 
     public function deletePostById(int $postId): void
