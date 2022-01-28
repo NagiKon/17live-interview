@@ -60,6 +60,15 @@ class PostService
         ];
     }
 
+    /**
+     * 各別更新文章的欄位
+     *
+     * @param  int         $postId  文章的 ID
+     * @param  string|null $title   如果參數為 null，則不更新這個欄位的值。
+     * @param  string|null $content 如果參數為 null，則不更新這個欄位的值。
+     *
+     * @return array 更新過後的文章資訊。
+     */
     public function updatePostById(int $postId, ?string $title, ?string $content): array
     {
         $post = $this->getPostModel($postId);
